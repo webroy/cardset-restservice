@@ -11,21 +11,21 @@ import ch.cardset.restservice.repository.UserRepository;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
-    @Bean
-    protected CommandLineRunner init(final UserRepository userRepository) {
+	@Bean
+	protected CommandLineRunner init(final UserRepository userRepository) {
 
-        return args -> {
-            User user = new User();
-            user.setUsername("admin");
-            user.setPassword("admin");
-            user.setName("Administrator");
-            user.setEmail("admin@javahelps.com");
-            userRepository.save(user);
+		return args -> {
+			User user = new User();
+			user.setUsername("admin");
+			user.setPassword("admin");
+			user.setName("Administrator");
+			user.setEmail("admin@javahelps.com");
+			userRepository.save(user);
 
-        };
-    }
+		};
+	}
 }

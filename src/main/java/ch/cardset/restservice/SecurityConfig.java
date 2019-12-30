@@ -16,24 +16,24 @@ import ch.cardset.restservice.repository.UserRepository;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(username -> {
-            User user = userRepository.findOne(username);
-            if (user != null) {
-                return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                        true, true, true, true, AuthorityUtils.createAuthorityList("USER"));
-            } else {
-                throw new UsernameNotFoundException("Could not find the user '" + username + "'");
-            }
-        });
-    }
+	@Autowired
+	protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(username -> {
+			User user = userRepository.findOne(username);
+			if (user != null) {
+				return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+						true, true, true, true, AuthorityUtils.createAuthorityList("USER"));
+			} else {
+				throw new UsernameNotFoundException("Could not find the user '" + username + "'");
+			}
+		});
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().fullyAuthenticated().and().httpBasic().and().csrf().disable();
-    }
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().anyRequest().fullyAuthenticated().and().httpBasic().and().csrf().disable();
+	}
 }
