@@ -18,6 +18,17 @@ public class Card {
     @ManyToOne
     private CardSet cardSet;
     
+    public Card(int id, String img, String question){
+        super();
+        this.id = id;
+        this.img = img;
+        this.question = question;
+    }
+    
+    public Card(){
+        super();
+    }
+    
     public int getId() {
         return id;
     }

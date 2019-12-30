@@ -18,6 +18,16 @@ public class Answer {
     @OneToOne
     private Card card;
 
+    public Answer(int id, String answer){
+        super();
+        this.id = id;
+        this.answer = answer;
+    }
+    
+    public Answer(){
+        super();
+    }
+    
     public int getId() {
         return id;
     }

@@ -13,6 +13,16 @@ public class CardType {
     private int id;
     private String type;
 
+    public CardType(int id, String type){
+        super();
+        this.id = id;
+        this.type = type;
+    }
+    
+    public CardType(){
+        super();
+    }
+    
     public int getId() {
         return id;
     }

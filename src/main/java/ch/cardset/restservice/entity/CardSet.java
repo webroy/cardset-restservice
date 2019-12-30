@@ -20,6 +20,16 @@ public class CardSet {
     @ManyToOne
     private CardType cardType;
 
+    public CardSet(int id, String name){
+        super();
+        this.id = id;
+        this.name = name;
+    }
+    
+    public CardSet(){
+        super();
+    }
+    
     public int getId() {
         return id;
     }
