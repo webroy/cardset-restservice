@@ -1,21 +1,18 @@
 package ch.cardset.restservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.cardset.restservice.entity.CardType;
-import ch.cardset.restservice.entity.Category;
 import ch.cardset.restservice.repository.CardTypeRepository;
+import java.util.Optional;
 
-import javassist.tools.web.BadHttpRequest;
-import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/cardType")
@@ -24,37 +21,53 @@ public class CardTypeController {
     @Autowired
     private CardTypeRepository repository;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public Iterable<CardType> findAll() {
         return repository.findAll();
     }
 
-    @GetMapping(path = "/{id}")
-    public CardType find(@PathVariable("id") Integer id) {
-        return repository.getOne(id);
-    }
-
-    @PostMapping(consumes = "application/json")
-    public CardType create(@RequestBody CardType cardType) {
-        return repository.save(cardType);
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") Integer id) {
-        repository.deleteById(id);
-    }
-
-    @PutMapping(path = "/{type}")
-    public CardType update(@PathVariable("type") String type, @RequestBody CardType cardType) throws BadHttpRequest {
-        CardType ct = new CardType();
-        ct.setType(type);
-        
-        if (repository.findOne(Example.of(ct)) != null) {
-            cardType.setType(type);
-            return repository.save(cardType);
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    public Optional<CardType> find(@PathVariable("id") Integer id) {
+        // check for existing
+        if (repository.findById(id).orElse(null) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card Type not found!");
         } else {
-            throw new BadHttpRequest();
+            return repository.findById(id);
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    public CardType create(@RequestBody CardType cardType) {
+        // check for existing the same card type
+        if (repository.findByType(cardType.getType()) == null) {
+            return repository.save(cardType);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate Card Type!");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public CardType update(@RequestBody CardType cardType) {
+        // check for existing
+        if (repository.findById(cardType.getId()).orElse(null) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card Type not found!");
+        }
+            
+        // check for existing the same card type
+        if (repository.findByType(cardType.getType()) == null) {
+            return repository.save(cardType);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate Card Type!");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+    public void delete(@PathVariable("id") Integer id) {
+        // check for existing
+        if (repository.findById(id).orElse(null) != null) {
+            repository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card Type not found!");
+        }
+    }
 }

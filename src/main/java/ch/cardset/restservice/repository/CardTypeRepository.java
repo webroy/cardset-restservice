@@ -7,5 +7,5 @@ import ch.cardset.restservice.entity.CardType;
 
 @RestResource(exported = false)
 public interface CardTypeRepository extends JpaRepository<CardType, Integer> {
-
+    public CardType findByType(String type);
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.cardset.restservice.entity.Category;
 import ch.cardset.restservice.repository.CategoryRepository;
+import java.util.Optional;
 
 import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpStatus;
@@ -27,8 +28,13 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public Category find(@PathVariable("id") Integer id) {
-        return repository.getOne(id);
+    public Optional<Category> find(@PathVariable("id") Integer id) {
+        // check for existing
+        if (repository.findById(id).orElse(null) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");
+        } else {
+            return repository.findById(id);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -43,6 +49,11 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public Category update(@RequestBody Category category) throws BadHttpRequest {
+        // check for existing
+        if (repository.findById(category.getId()).orElse(null) == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");
+        }
+        
         // check for existing the same category name
         if (repository.findByName(category.getName()) == null) {
             return repository.save(category);
@@ -54,7 +65,7 @@ public class CategoryController {
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
     public void delete(@PathVariable("id") Integer id) {
         // check for existing
-        if (repository.getOne(id) != null) {
+        if (repository.findById(id).orElse(null) != null) {
             repository.deleteById(id);
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");

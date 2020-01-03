@@ -1,5 +1,7 @@
 package ch.cardset.restservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class CardSet {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class CardSet implements Serializable {
 
     @Id
     @GeneratedValue( strategy=GenerationType.AUTO )
@@ -32,6 +35,10 @@ public class CardSet {
     
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
