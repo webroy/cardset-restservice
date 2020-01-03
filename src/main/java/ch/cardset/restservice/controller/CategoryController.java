@@ -1,11 +1,7 @@
 package ch.cardset.restservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +10,9 @@ import ch.cardset.restservice.entity.Category;
 import ch.cardset.restservice.repository.CategoryRepository;
 
 import javassist.tools.web.BadHttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(path = "/category")
@@ -22,34 +21,43 @@ public class CategoryController {
     @Autowired
     private CategoryRepository repository;
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public Iterable<Category> findAll() {
         return repository.findAll();
     }
 
-    @GetMapping(path = "/{id}")
-    public Category find(@PathVariable("id") String id) {
-        return repository.findOne(id);
+    @RequestMapping(method = RequestMethod.GET, path = "/{id}")
+    public Category find(@PathVariable("id") Integer id) {
+        return repository.getOne(id);
     }
 
-    @PostMapping(consumes = "application/json")
-    public Category create(@RequestBody Category category) {
-        return repository.save(category);
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") String id) {
-        repository.delete(id);
-    }
-
-    @PutMapping(path = "/{categoryName}")
-    public Category update(@PathVariable("categoryName") String categoryName, @RequestBody Category category) throws BadHttpRequest {
-        if (repository.exists(categoryName)) {
-            category.setName(categoryName);
+    @RequestMapping(method = RequestMethod.POST)
+    public Category create(@RequestBody Category category) throws BadHttpRequest {
+        // check for existing the same category name
+        if (repository.findByName(category.getName()) == null) {
             return repository.save(category);
         } else {
-            throw new BadHttpRequest();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate Category Name!");
         }
     }
 
+    @RequestMapping(method = RequestMethod.PUT)
+    public Category update(@RequestBody Category category) throws BadHttpRequest {
+        // check for existing the same category name
+        if (repository.findByName(category.getName()) == null) {
+            return repository.save(category);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate Category Name!");
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+    public void delete(@PathVariable("id") Integer id) {
+        // check for existing
+        if (repository.getOne(id) != null) {
+            repository.deleteById(id);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");
+        }
+    }
 }

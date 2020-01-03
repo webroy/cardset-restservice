@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.cardset.restservice.entity.CardType;
+import ch.cardset.restservice.entity.Category;
 import ch.cardset.restservice.repository.CardTypeRepository;
 
 import javassist.tools.web.BadHttpRequest;
+import org.springframework.data.domain.Example;
 
 @RestController
 @RequestMapping(path = "/cardType")
@@ -28,8 +30,8 @@ public class CardTypeController {
     }
 
     @GetMapping(path = "/{id}")
-    public CardType find(@PathVariable("id") String id) {
-        return repository.findOne(id);
+    public CardType find(@PathVariable("id") Integer id) {
+        return repository.getOne(id);
     }
 
     @PostMapping(consumes = "application/json")
@@ -38,13 +40,16 @@ public class CardTypeController {
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable("id") String id) {
-        repository.delete(id);
+    public void delete(@PathVariable("id") Integer id) {
+        repository.deleteById(id);
     }
 
     @PutMapping(path = "/{type}")
     public CardType update(@PathVariable("type") String type, @RequestBody CardType cardType) throws BadHttpRequest {
-        if (repository.exists(type)) {
+        CardType ct = new CardType();
+        ct.setType(type);
+        
+        if (repository.findOne(Example.of(ct)) != null) {
             cardType.setType(type);
             return repository.save(cardType);
         } else {

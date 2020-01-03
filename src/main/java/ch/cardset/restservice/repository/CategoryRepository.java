@@ -6,6 +6,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import ch.cardset.restservice.entity.Category;
 
 @RestResource(exported = false)
-public interface CategoryRepository extends JpaRepository<Category, String> {
-
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
+    public Category findByName(String name);
 }

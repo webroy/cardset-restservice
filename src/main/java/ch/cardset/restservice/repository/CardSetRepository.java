@@ -6,6 +6,6 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import ch.cardset.restservice.entity.CardSet;
 
 @RestResource(exported = false)
-public interface CardSetRepository extends JpaRepository<CardSet, String> {
+public interface CardSetRepository extends JpaRepository<CardSet, Integer> {
 
 }
