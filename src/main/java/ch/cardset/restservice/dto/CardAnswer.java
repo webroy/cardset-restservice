@@ -10,11 +10,19 @@ public class CardAnswer {
     private String originalSrc;
     private List<String> answer;
 
-    public CardAnswer(Integer id, String question) {
+    public CardAnswer(Integer id, String question, String img, String originalSrc) {
         this.id = id;
         this.question = question;
+        this.img = img;
+        this.originalSrc = originalSrc;
     }
-    
+    public CardAnswer(Integer id, String question, String img, String originalSrc, List<String> answer) {
+        this.id = id;
+        this.question = question;
+        this.img = img;
+        this.originalSrc = originalSrc;
+        this.answer = answer;
+    }
     
     public Integer getId() {
         return id;

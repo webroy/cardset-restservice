@@ -2,11 +2,17 @@ package ch.cardset.restservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -14,6 +20,7 @@ public class Card implements Serializable {
 
     @Id
     @GeneratedValue( strategy=GenerationType.AUTO )
+    @Column(name = "id")
     private int id;
     private String img;
     private String question;
@@ -22,6 +29,11 @@ public class Card implements Serializable {
     @ManyToOne
     private CardSet cardSet;
     
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "card_id")
+    private List<Answer> answer = new ArrayList<>();
+
+       
     public Card(int id, String img, String originalSrc, String question){
         super();
         this.id = id;
@@ -75,5 +87,13 @@ public class Card implements Serializable {
 
     public void setCardSet(CardSet cardSet) {
         this.cardSet = cardSet;
+    }
+    
+    public List<Answer> getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(List<Answer> answer) {
+        this.answer = answer;
     }
 }

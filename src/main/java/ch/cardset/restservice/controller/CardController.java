@@ -29,14 +29,18 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public CardAnswer find(@PathVariable("id") Integer id) {
+    public Optional<Card> find(@PathVariable("id") Integer id) {
         // check for existing
         if (repository.findById(id).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not found!");
         } else {
-            //return repository.findById(id);
-            return repository.getCardWithAnswers(id);
+            return repository.findById(id);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/category/{id}")
+    public CardAnswer findCardsFromCategory(@PathVariable("id") Integer id) {
+        return null; //repository.getCardWithAnswers(id); // TODO get all card with answer from category
     }
 
     @RequestMapping(method = RequestMethod.POST)
