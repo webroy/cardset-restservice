@@ -39,8 +39,8 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/category/{id}")
-    public CardAnswer findCardsFromCategory(@PathVariable("id") Integer id) {
-        return null; //repository.getCardWithAnswers(id); // TODO get all card with answer from category
+    public Iterable<Card> findCardsFromCategory(@PathVariable("id") Integer id) {
+        return repository.findByCardSetId(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
