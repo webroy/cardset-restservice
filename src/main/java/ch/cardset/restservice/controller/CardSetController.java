@@ -1,5 +1,6 @@
 package ch.cardset.restservice.controller;
 
+import ch.cardset.restservice.dto.CardSetDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,10 +39,16 @@ public class CardSetController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CardSet create(@RequestBody CardSet cardSet) throws BadHttpRequest {
+    public CardSetDto create(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
         // check for existing the same CardSet name
-        if (repository.findByCategoryId(cardSet.getId()) == null) {
-            return repository.save(cardSet);
+        if (repository.findByCategoryId(cardSet.getId()) == null) { // TODO
+            CardSet set = new CardSet();
+            set.setName(cardSet.getName());
+            set.setCategory(1);
+            
+            CardSet dbSet = repository.save(set);
+            cardSet.setId(dbSet.getId());
+            return cardSet;
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate CardSet Name!");
         }

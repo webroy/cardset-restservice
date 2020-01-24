@@ -8,5 +8,5 @@ import ch.cardset.restservice.entity.CardSet;
 @RestResource(exported = false)
 public interface CardSetRepository extends JpaRepository<CardSet, Integer> {
     public CardSet findByCategoryId(int id);  
-    public Iterable<CardSet> findAllByCategoryId(int id);    
+    public Iterable<CardSet> findAllByCategoryId(int id);
 }

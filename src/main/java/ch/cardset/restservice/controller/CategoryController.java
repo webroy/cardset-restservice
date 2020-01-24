@@ -24,8 +24,8 @@ public class CategoryController {
 
     @RequestMapping(method = RequestMethod.GET)
     public Iterable<Category> findAll() {
-        return repository.findAll();
-    }
+            return repository.findAll();
+        }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
     public Optional<Category> find(@PathVariable("id") Integer id) {
@@ -53,7 +53,7 @@ public class CategoryController {
         if (repository.findById(category.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");
         }
-        
+
         // check for existing the same category name
         if (repository.findByName(category.getName()) == null) {
             return repository.save(category);

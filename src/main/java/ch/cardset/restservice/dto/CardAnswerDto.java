@@ -3,20 +3,20 @@ package ch.cardset.restservice.dto;
 import java.util.List;
 
 
-public class CardAnswer {
+public class CardAnswerDto {
     private Integer id;
     private String question;
     private String img;
     private String originalSrc;
     private List<String> answer;
 
-    public CardAnswer(Integer id, String question, String img, String originalSrc) {
+    public CardAnswerDto(Integer id, String question, String img, String originalSrc) {
         this.id = id;
         this.question = question;
         this.img = img;
         this.originalSrc = originalSrc;
     }
-    public CardAnswer(Integer id, String question, String img, String originalSrc, List<String> answer) {
+    public CardAnswerDto(Integer id, String question, String img, String originalSrc, List<String> answer) {
         this.id = id;
         this.question = question;
         this.img = img;
