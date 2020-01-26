@@ -39,34 +39,33 @@ public class CardSetController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CardSetDto create(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
+    public CardSet create(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
         // check for existing the same CardSet name
-        if (repository.findByCategoryId(cardSet.getId()) == null) { // TODO
-            CardSet set = new CardSet();
-            set.setName(cardSet.getName());
-            set.setCategory(1);
-            
-            CardSet dbSet = repository.save(set);
-            cardSet.setId(dbSet.getId());
-            return cardSet;
-        } else {
+        if (repository.findByName(cardSet.getName()) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate CardSet Name!");
         }
+        
+        // Insert cardset and check if it works
+        if(repository.addCardSet(cardSet.getName(), cardSet.getCategory(), cardSet.getCardType()) > 0){
+            return repository.findTopByOrderByIdDesc();
+        }
+        
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not inserted!");
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CardSet update(@RequestBody CardSet cardSet) throws BadHttpRequest {
+    public CardSet update(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
         // check for existing
         if (repository.findById(cardSet.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not found!");
         }
         
-        // check for existing the same CardSet name
-        if (repository.findByCategoryId(cardSet.getId()) == null) {
-            return repository.save(cardSet);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate CardSet Name!");
+        // Update cardset and check if it updated
+        if(repository.updateCardSet(cardSet.getId(), cardSet.getName(), cardSet.getCategory(), cardSet.getCardType()) > 0){
+            return repository.findTopByOrderByIdDesc(); // TODO get old data back - why?
         }
+
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not updated!");
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
