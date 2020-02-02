@@ -1,6 +1,7 @@
 package ch.cardset.restservice.controller;
 
 import ch.cardset.restservice.dto.CardAnswerDto;
+import ch.cardset.restservice.dto.CardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,18 +45,26 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Card create(@RequestBody Card category) {
-        return repository.save(category);
+    public Card create(@RequestBody CardDto card) {
+        if (repository.addCard(card.getImg(), card.getOriginalSrc(), card.getQuestion(), card.getCardSetId()) > 0){
+            return repository.findTopByOrderByIdDesc();
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not inserted!");
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Card update(@RequestBody Card category) {
+    public Card update(@RequestBody CardDto card) {
         // check for existing
-        if (repository.findById(category.getId()).orElse(null) == null) {
+        if (repository.findById(card.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not found!");
         }
         
-        return repository.save(category);
+        // Update cardset and check if it updated
+        if(repository.updateCard(card.getId(), card.getImg(), card.getOriginalSrc(), card.getQuestion(), card.getCardSetId()) > 0){
+            return repository.findTopByOrderByIdDesc(); // TODO get old data back - why?
+        }
+
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not updated!");
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
