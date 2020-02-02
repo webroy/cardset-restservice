@@ -21,6 +21,6 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     
     @Modifying
     @Transactional
-    @Query(value = "UPDATE card SET img = :img, original_src = :originalSrc, question = :question, card_set_id = :cardSetId WHERE id = :id", nativeQuery = true)
-    public int updateCard(@Param("id") int id, @Param("img") String img, @Param("originalSrc") String originalSrc, @Param("question") String question, @Param("cardSetId") int cardSetId); // return number of affected rows
+    @Query(value = "UPDATE card SET img = :img, original_src = :originalSrc, question = :question WHERE id = :id", nativeQuery = true)
+    public int updateCard(@Param("id") int id, @Param("img") String img, @Param("originalSrc") String originalSrc, @Param("question") String question); // return number of affected rows
 }

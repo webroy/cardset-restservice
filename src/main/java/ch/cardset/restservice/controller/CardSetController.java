@@ -62,7 +62,7 @@ public class CardSetController {
         
         // Update cardset and check if it updated
         if(repository.updateCardSet(cardSet.getId(), cardSet.getName(), cardSet.getCategory(), cardSet.getCardType()) > 0){
-            return repository.findTopByOrderByIdDesc(); // TODO get old data back - why?
+            return repository.findById(cardSet.getId()).orElse(null); // TODO get old data back - why?
         }
 
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not updated!");

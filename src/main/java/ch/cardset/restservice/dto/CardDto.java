@@ -15,7 +15,7 @@ public class CardDto {
         this.question = question;
         this.cardSetId = cardSetId;
     }
-
+    
     public Integer getId() {
         return id;
     }

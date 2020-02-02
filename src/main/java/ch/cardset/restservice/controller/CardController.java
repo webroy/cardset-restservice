@@ -1,6 +1,5 @@
 package ch.cardset.restservice.controller;
 
-import ch.cardset.restservice.dto.CardAnswerDto;
 import ch.cardset.restservice.dto.CardDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ch.cardset.restservice.entity.Card;
 import ch.cardset.restservice.repository.CardRepository;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -60,8 +58,8 @@ public class CardController {
         }
         
         // Update cardset and check if it updated
-        if(repository.updateCard(card.getId(), card.getImg(), card.getOriginalSrc(), card.getQuestion(), card.getCardSetId()) > 0){
-            return repository.findTopByOrderByIdDesc(); // TODO get old data back - why?
+        if(repository.updateCard(card.getId(), card.getImg(), card.getOriginalSrc(), card.getQuestion()) > 0){
+            return repository.findById(card.getId()).orElse(null); // TODO get old data back - why?
         }
 
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not updated!");

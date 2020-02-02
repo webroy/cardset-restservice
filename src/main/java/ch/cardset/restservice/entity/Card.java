@@ -19,8 +19,8 @@ import javax.persistence.OneToMany;
 public class Card implements Serializable {
 
     @Id
-    @GeneratedValue( strategy=GenerationType.AUTO )
-    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, unique = true)
     private int id;
     private String img;
     private String question;
