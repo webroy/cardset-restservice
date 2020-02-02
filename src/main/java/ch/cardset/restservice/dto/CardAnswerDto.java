@@ -1,5 +1,6 @@
 package ch.cardset.restservice.dto;
 
+import ch.cardset.restservice.entity.Answer;
 import java.util.List;
 
 
@@ -8,19 +9,15 @@ public class CardAnswerDto {
     private String question;
     private String img;
     private String originalSrc;
-    private List<String> answer;
+    private List<Answer> answer;
+    private Integer cardSetId;
 
-    public CardAnswerDto(Integer id, String question, String img, String originalSrc) {
+    public CardAnswerDto(Integer id, String img, String originalSrc, String question, Integer cardSetId, List<Answer> answer) {
         this.id = id;
-        this.question = question;
         this.img = img;
         this.originalSrc = originalSrc;
-    }
-    public CardAnswerDto(Integer id, String question, String img, String originalSrc, List<String> answer) {
-        this.id = id;
         this.question = question;
-        this.img = img;
-        this.originalSrc = originalSrc;
+        this.cardSetId = cardSetId;
         this.answer = answer;
     }
     
@@ -55,13 +52,20 @@ public class CardAnswerDto {
     public void setOriginalSrc(String originalSrc) {
         this.originalSrc = originalSrc;
     }
+    
+    public Integer getCardSetId() {
+        return cardSetId;
+    }
 
-    public List<String> getAnswer() {
+    public void setCardSetId(Integer cardSetId) {
+        this.cardSetId = cardSetId;
+    }
+
+    public List<Answer> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(List<String> answer) {
+    public void setAnswer(List<Answer> answer) {
         this.answer = answer;
     }
-    
 }

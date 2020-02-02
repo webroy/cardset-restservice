@@ -23,4 +23,14 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     @Transactional
     @Query(value = "UPDATE card SET img = :img, original_src = :originalSrc, question = :question WHERE id = :id", nativeQuery = true)
     public int updateCard(@Param("id") int id, @Param("img") String img, @Param("originalSrc") String originalSrc, @Param("question") String question); // return number of affected rows
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSER INTO answer SET answer = :answer, is_correct = :isCorrect, card_id = :cardId", nativeQuery = true)
+    public int addCardAnswer(@Param("answer") String answer, @Param("isCorrect") Boolean isCorrect, @Param("cardId") int cardId); // return number of affected rows
+    
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE answer SET answer = :answer, is_correct = :isCorrect WHERE id = :id", nativeQuery = true)
+    public int updateCardAnswer(@Param("id") int id, @Param("answer") String answer, @Param("isCorrect") Boolean isCorrect); // return number of affected rows
 }

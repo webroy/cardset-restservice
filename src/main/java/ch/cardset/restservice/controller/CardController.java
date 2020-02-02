@@ -1,6 +1,8 @@
 package ch.cardset.restservice.controller;
 
+import ch.cardset.restservice.dto.CardAnswerDto;
 import ch.cardset.restservice.dto.CardDto;
+import ch.cardset.restservice.entity.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,15 +45,19 @@ public class CardController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Card create(@RequestBody CardDto card) {
+    public Card create(@RequestBody CardAnswerDto card) {
         if (repository.addCard(card.getImg(), card.getOriginalSrc(), card.getQuestion(), card.getCardSetId()) > 0){
+             card.getAnswer().forEach((answer) -> {
+                repository.addCardAnswer(answer.getAnswer(), answer.getIsCorrect(), card.getId());
+            });
+             
             return repository.findTopByOrderByIdDesc();
         }
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not inserted!");
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not inserted!");
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Card update(@RequestBody CardDto card) {
+    public Card update(@RequestBody CardAnswerDto card) {
         // check for existing
         if (repository.findById(card.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not found!");
@@ -59,6 +65,13 @@ public class CardController {
         
         // Update cardset and check if it updated
         if(repository.updateCard(card.getId(), card.getImg(), card.getOriginalSrc(), card.getQuestion()) > 0){
+            card.getAnswer().forEach((answer) -> {
+                if (answer.getId() > 0)
+                    repository.updateCardAnswer(answer.getId(), answer.getAnswer(), answer.getIsCorrect());
+                else
+                    repository.addCardAnswer(answer.getAnswer(), answer.getIsCorrect(), card.getId());
+            });
+                    
             return repository.findById(card.getId()).orElse(null); // TODO get old data back - why?
         }
 
