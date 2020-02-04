@@ -68,7 +68,7 @@ public class CardController {
             card.getAnswer().forEach((answer) -> {
                 if (answer.getId() > 0)
                     repository.updateCardAnswer(answer.getId(), answer.getAnswer(), answer.getIsCorrect());
-                else
+                else if (!answer.getAnswer().equals(""))
                     repository.addCardAnswer(answer.getAnswer(), answer.getIsCorrect(), card.getId());
             });
                     

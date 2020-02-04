@@ -26,7 +26,7 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSER INTO answer SET answer = :answer, is_correct = :isCorrect, card_id = :cardId", nativeQuery = true)
+    @Query(value = "INSERT INTO answer SET answer = :answer, is_correct = :isCorrect, card_id = :cardId", nativeQuery = true)
     public int addCardAnswer(@Param("answer") String answer, @Param("isCorrect") Boolean isCorrect, @Param("cardId") int cardId); // return number of affected rows
     
     @Modifying
