@@ -1,8 +1,6 @@
 package ch.cardset.restservice.controller;
 
 import ch.cardset.restservice.dto.CardAnswerDto;
-import ch.cardset.restservice.dto.CardDto;
-import ch.cardset.restservice.entity.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
