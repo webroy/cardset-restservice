@@ -1,6 +1,7 @@
 package ch.cardset.restservice.controller;
 
 import ch.cardset.restservice.dto.CardSetDto;
+import ch.cardset.restservice.entity.Card;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.cardset.restservice.entity.CardSet;
+import ch.cardset.restservice.repository.CardRepository;
 import ch.cardset.restservice.repository.CardSetRepository;
 import java.util.Optional;
 
@@ -22,6 +24,8 @@ public class CardSetController {
 
     @Autowired
     private CardSetRepository repository;
+    @Autowired
+    private CardRepository cardRepository;
 
     @RequestMapping(method = RequestMethod.GET, path = "/category/{id}")
     public Iterable<CardSet> findAll(@PathVariable("id") Integer id) {
@@ -72,7 +76,12 @@ public class CardSetController {
     public void delete(@PathVariable("id") Integer id) {
         // check for existing
         if (repository.findById(id).orElse(null) != null) {
-            repository.deleteById(id);
+            Iterable<Card> cardsFromSet = cardRepository.findByCardSetId(id);
+            if (cardsFromSet != null) {
+                cardRepository.deleteAll(cardsFromSet); // delete first all cards from set
+            }
+            
+            repository.deleteById(id); // delete card set!
         } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not found!");
         }
