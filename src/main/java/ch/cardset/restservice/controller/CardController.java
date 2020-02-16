@@ -12,6 +12,7 @@ import ch.cardset.restservice.repository.CardRepository;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -74,6 +75,29 @@ public class CardController {
         }
 
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not updated!");
+    }
+
+    @RequestMapping(method = RequestMethod.POST, path = "/{id}/copy")
+    public Card copyCard(@PathVariable("id") Integer cardId) {
+        // check for existing
+        Card originalCard = repository.findById(cardId).orElse(null);
+        if (originalCard == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not found!");
+        }
+        
+        try {
+            Card newCard = new Card(0, originalCard.getImg(), originalCard.getOriginalSrc(), originalCard.getQuestion());
+            newCard.setCardSet(originalCard.getCardSet());
+            
+            Card savedCard = repository.save(newCard);
+            originalCard.getAnswer().forEach((answer) -> {
+                repository.addCardAnswer(answer.getAnswer(), answer.getIsCorrect(), savedCard.getId());
+            });
+            
+            return find(savedCard.getId()).orElse(null); // TODO wait before saving all answers..
+        } catch(Exception ex){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not copied!");
+        }
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
