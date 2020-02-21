@@ -13,7 +13,6 @@ import ch.cardset.restservice.repository.CardRepository;
 import ch.cardset.restservice.repository.CardSetRepository;
 import java.util.Optional;
 
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
@@ -43,7 +42,7 @@ public class CardSetController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public CardSet create(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
+    public CardSet create(@RequestBody CardSetDto cardSet) {
         // check for existing the same CardSet name
         if (repository.findByName(cardSet.getName()) != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Duplicate CardSet Name!");
@@ -58,7 +57,7 @@ public class CardSetController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public CardSet update(@RequestBody CardSetDto cardSet) throws BadHttpRequest {
+    public CardSet update(@RequestBody CardSetDto cardSet) {
         // check for existing
         if (repository.findById(cardSet.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "CardSet not found!");

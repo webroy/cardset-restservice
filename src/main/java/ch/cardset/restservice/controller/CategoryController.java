@@ -10,7 +10,6 @@ import ch.cardset.restservice.entity.Category;
 import ch.cardset.restservice.repository.CategoryRepository;
 import java.util.Optional;
 
-import javassist.tools.web.BadHttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.server.ResponseStatusException;
@@ -38,7 +37,7 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Category create(@RequestBody Category category) throws BadHttpRequest {
+    public Category create(@RequestBody Category category) {
         // check for existing the same category name
         if (repository.findByName(category.getName()) == null) {
             return repository.save(category);
@@ -48,7 +47,7 @@ public class CategoryController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public Category update(@RequestBody Category category) throws BadHttpRequest {
+    public Category update(@RequestBody Category category) {
         // check for existing
         if (repository.findById(category.getId()).orElse(null) == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Category not found!");
