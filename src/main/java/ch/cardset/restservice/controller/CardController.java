@@ -61,7 +61,7 @@ public class CardController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Card not found!");
         }
         
-        // Update cardset and check if it updated
+        // Update card and check if it updated
         if(repository.updateCard(card.getId(), card.getImg(), card.getOriginalSrc(), card.getQuestion()) > 0){
             card.getAnswer().forEach((answer) -> {
                 if (answer.getId() > 0)
