@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="rest-service">
+  <ClassDiagramComponents>
+    <Class name="CardController" package="ch.cardset.restservice.controller" visibility="public" xPosition="2258.0" yPosition="320.0">
+      <Fields>
+        <Field name="repository" type="CardRepository" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="findAll" returnType="Iterable&lt;Card&gt;" visibility="public"/>
+        <Method name="find" returnType="Optional&lt;Card&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="findCardsFromCategory" returnType="Iterable&lt;Card&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="create" returnType="Card" visibility="public">
+          <Argument type="CardAnswerDto" name="card"/>
+        </Method>
+        <Method name="update" returnType="Card" visibility="public">
+          <Argument type="CardAnswerDto" name="card"/>
+        </Method>
+        <Method name="copyCard" returnType="Card" visibility="public">
+          <Argument type="Integer" name="cardId"/>
+        </Method>
+        <Method name="delete" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CardSetController" package="ch.cardset.restservice.controller" visibility="public" xPosition="1561.0" yPosition="272.0">
+      <Fields>
+        <Field name="repository" type="CardSetRepository" visibility="private"/>
+        <Field name="cardRepository" type="CardRepository" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="findAll" returnType="Iterable&lt;CardSet&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="find" returnType="Optional&lt;CardSet&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="create" returnType="CardSet" visibility="public">
+          <Argument type="CardSetDto" name="cardSet"/>
+        </Method>
+        <Method name="update" returnType="CardSet" visibility="public">
+          <Argument type="CardSetDto" name="cardSet"/>
+        </Method>
+        <Method name="delete" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CardTypeController" package="ch.cardset.restservice.controller" visibility="public" xPosition="923.0" yPosition="184.0">
+      <Fields>
+        <Field name="repository" type="CardTypeRepository" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="findAll" returnType="Iterable&lt;CardType&gt;" visibility="public"/>
+        <Method name="find" returnType="Optional&lt;CardType&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="create" returnType="CardType" visibility="public">
+          <Argument type="CardType" name="cardType"/>
+        </Method>
+        <Method name="update" returnType="CardType" visibility="public">
+          <Argument type="CardType" name="cardType"/>
+        </Method>
+        <Method name="delete" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CategoryController" package="ch.cardset.restservice.controller" visibility="public" xPosition="373.0" yPosition="184.0">
+      <Fields>
+        <Field name="repository" type="CategoryRepository" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="findAll" returnType="Iterable&lt;Category&gt;" visibility="public"/>
+        <Method name="find" returnType="Optional&lt;Category&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="create" returnType="Category" visibility="public">
+          <Argument type="Category" name="category"/>
+        </Method>
+        <Method name="update" returnType="Category" visibility="public">
+          <Argument type="Category" name="category"/>
+        </Method>
+        <Method name="delete" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CardAnswerDto" package="ch.cardset.restservice.dto" visibility="public" xPosition="525.0" yPosition="650.0">
+      <Fields>
+        <Field name="id" type="Integer" visibility="private"/>
+        <Field name="question" type="String" visibility="private"/>
+        <Field name="img" type="String" visibility="private"/>
+        <Field name="originalSrc" type="String" visibility="private"/>
+        <Field name="answer" type="List&lt;Answer&gt;" visibility="private"/>
+        <Field name="cardSetId" type="Integer" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Integer" name="id"/>
+          <Argument type="String" name="img"/>
+          <Argument type="String" name="originalSrc"/>
+          <Argument type="String" name="question"/>
+          <Argument type="Integer" name="cardSetId"/>
+          <Argument type="List&lt;Answer&gt;" name="answer"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="Integer" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="getQuestion" returnType="String" visibility="public"/>
+        <Method name="setQuestion" returnType="void" visibility="public">
+          <Argument type="String" name="question"/>
+        </Method>
+        <Method name="getImg" returnType="String" visibility="public"/>
+        <Method name="setImg" returnType="void" visibility="public">
+          <Argument type="String" name="img"/>
+        </Method>
+        <Method name="getOriginalSrc" returnType="String" visibility="public"/>
+        <Method name="setOriginalSrc" returnType="void" visibility="public">
+          <Argument type="String" name="originalSrc"/>
+        </Method>
+        <Method name="getCardSetId" returnType="Integer" visibility="public"/>
+        <Method name="setCardSetId" returnType="void" visibility="public">
+          <Argument type="Integer" name="cardSetId"/>
+        </Method>
+        <Method name="getAnswer" returnType="List&lt;Answer&gt;" visibility="public"/>
+        <Method name="setAnswer" returnType="void" visibility="public">
+          <Argument type="List&lt;Answer&gt;" name="answer"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Answer" package="ch.cardset.restservice.entity" visibility="public" xPosition="2257.0" yPosition="630.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="answer" type="String" visibility="private"/>
+        <Field name="isCorrect" type="boolean" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="answer"/>
+          <Argument type="boolean" name="isCorrect"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getAnswer" returnType="String" visibility="public"/>
+        <Method name="setAnswer" returnType="void" visibility="public">
+          <Argument type="String" name="answer"/>
+        </Method>
+        <Method name="getIsCorrect" returnType="boolean" visibility="public"/>
+        <Method name="setIsCorrect" returnType="void" visibility="public">
+          <Argument type="boolean" name="isCorrect"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Card" package="ch.cardset.restservice.entity" visibility="public" xPosition="1853.0" yPosition="320.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="img" type="String" visibility="private"/>
+        <Field name="question" type="String" visibility="private"/>
+        <Field name="originalSrc" type="String" visibility="private"/>
+        <Field name="cardSet" type="CardSet" visibility="private"/>
+        <Field name="answer" type="List&lt;Answer&gt;" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="img"/>
+          <Argument type="String" name="originalSrc"/>
+          <Argument type="String" name="question"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getImg" returnType="String" visibility="public"/>
+        <Method name="setImg" returnType="void" visibility="public">
+          <Argument type="String" name="img"/>
+        </Method>
+        <Method name="getOriginalSrc" returnType="String" visibility="public"/>
+        <Method name="setOriginalSrc" returnType="void" visibility="public">
+          <Argument type="String" name="originalSrc"/>
+        </Method>
+        <Method name="getQuestion" returnType="String" visibility="public"/>
+        <Method name="setQuestion" returnType="void" visibility="public">
+          <Argument type="String" name="question"/>
+        </Method>
+        <Method name="getCardSet" returnType="CardSet" visibility="public"/>
+        <Method name="setCardSet" returnType="void" visibility="public">
+          <Argument type="CardSet" name="cardSet"/>
+        </Method>
+        <Method name="getAnswer" returnType="List&lt;Answer&gt;" visibility="public"/>
+        <Method name="setAnswer" returnType="void" visibility="public">
+          <Argument type="List&lt;Answer&gt;" name="answer"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CardSet" package="ch.cardset.restservice.entity" visibility="public" xPosition="1226.0" yPosition="450.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+        <Field name="category" type="Category" visibility="private"/>
+        <Field name="cardType" type="CardType" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="name"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="setName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="getCategory" returnType="Category" visibility="public"/>
+        <Method name="setCategory" returnType="void" visibility="public">
+          <Argument type="Category" name="category"/>
+        </Method>
+        <Method name="getCardType" returnType="CardType" visibility="public"/>
+        <Method name="setCardType" returnType="void" visibility="public">
+          <Argument type="CardType" name="cardType"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="CardType" package="ch.cardset.restservice.entity" visibility="public" xPosition="1226.0" yPosition="184.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="type" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="type"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getType" returnType="String" visibility="public"/>
+        <Method name="setType" returnType="void" visibility="public">
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Category" package="ch.cardset.restservice.entity" visibility="public" xPosition="661.0" yPosition="252.0">
+      <Fields>
+        <Field name="id" type="int" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="name"/>
+        </Constructor>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="int" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="setName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Interface name="AnswerRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="162.0" yPosition="44.0">
+      <Methods/>
+    </Interface>
+    <Interface name="CardRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="1853.0" yPosition="44.0">
+      <Methods>
+        <Method name="findByCardSetId" returnType="Iterable&lt;Card&gt;" visibility="public">
+          <Argument type="Integer" name="id"/>
+        </Method>
+        <Method name="findTopByOrderByIdDesc" returnType="Card" visibility="public"/>
+        <Method name="addCard" returnType="int" visibility="public">
+          <Argument type="String" name="img"/>
+          <Argument type="String" name="originalSrc"/>
+          <Argument type="String" name="question"/>
+          <Argument type="int" name="cardSetId"/>
+        </Method>
+        <Method name="updateCard" returnType="int" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="img"/>
+          <Argument type="String" name="originalSrc"/>
+          <Argument type="String" name="question"/>
+        </Method>
+        <Method name="addCardAnswer" returnType="int" visibility="public">
+          <Argument type="String" name="answer"/>
+          <Argument type="Boolean" name="isCorrect"/>
+          <Argument type="int" name="cardId"/>
+        </Method>
+        <Method name="updateCardAnswer" returnType="int" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="answer"/>
+          <Argument type="Boolean" name="isCorrect"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="CardSetRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="1446.0" yPosition="44.0">
+      <Methods>
+        <Method name="findByCategoryId" returnType="CardSet" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="findByName" returnType="CardSet" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="findAllByCategoryId" returnType="Iterable&lt;CardSet&gt;" visibility="public">
+          <Argument type="int" name="id"/>
+        </Method>
+        <Method name="findTopByOrderByIdDesc" returnType="CardSet" visibility="public"/>
+        <Method name="addCardSet" returnType="int" visibility="public">
+          <Argument type="String" name="name"/>
+          <Argument type="int" name="category"/>
+          <Argument type="int" name="type"/>
+        </Method>
+        <Method name="updateCardSet" returnType="int" visibility="public">
+          <Argument type="int" name="id"/>
+          <Argument type="String" name="name"/>
+          <Argument type="int" name="category"/>
+          <Argument type="int" name="type"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="CardTypeRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="1076.0" yPosition="44.0">
+      <Methods>
+        <Method name="findByType" returnType="CardType" visibility="public">
+          <Argument type="String" name="type"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="CategoryRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="502.0" yPosition="44.0">
+      <Methods>
+        <Method name="findByName" returnType="Category" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+      </Methods>
+    </Interface>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="ch.cardset.restservice.repository.CardSetRepository" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.repository.CardRepository" target="ch.cardset.restservice.entity.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="answer" source="ch.cardset.restservice.dto.CardAnswerDto" target="ch.cardset.restservice.entity.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
+    <UseRelation source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.dto.CardAnswerDto" target="ch.cardset.restservice.entity.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="answer" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
+    <UseRelation source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.repository.CardTypeRepository" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CategoryController" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CategoryController" target="ch.cardset.restservice.repository.CategoryRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardTypeController" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.repository.CategoryRepository" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cardType" source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.CardType" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="category" source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.Category" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cardSet" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.CardSet" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSet"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardSetRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSetRepository"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.entity.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cardRepository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardTypeController" target="ch.cardset.restservice.repository.CardTypeRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
