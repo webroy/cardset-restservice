@@ -2,7 +2,7 @@
 
 <ClassDiagram name="rest-service">
   <ClassDiagramComponents>
-    <Class name="CardController" package="ch.cardset.restservice.controller" visibility="public" xPosition="2258.0" yPosition="320.0">
+    <Class name="CardController" package="ch.cardset.restservice.controller" visibility="public" xPosition="2257.0" yPosition="320.0">
       <Fields>
         <Field name="repository" type="CardRepository" visibility="private"/>
       </Fields>
@@ -29,7 +29,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="CardSetController" package="ch.cardset.restservice.controller" visibility="public" xPosition="1561.0" yPosition="272.0">
+    <Class name="CardSetController" package="ch.cardset.restservice.controller" visibility="public" xPosition="1491.0" yPosition="270.0">
       <Fields>
         <Field name="repository" type="CardSetRepository" visibility="private"/>
         <Field name="cardRepository" type="CardRepository" visibility="private"/>
@@ -74,7 +74,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="CategoryController" package="ch.cardset.restservice.controller" visibility="public" xPosition="373.0" yPosition="184.0">
+    <Class name="CategoryController" package="ch.cardset.restservice.controller" visibility="public" xPosition="632.0" yPosition="184.0">
       <Fields>
         <Field name="repository" type="CategoryRepository" visibility="private"/>
       </Fields>
@@ -215,7 +215,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="CardSet" package="ch.cardset.restservice.entity" visibility="public" xPosition="1226.0" yPosition="450.0">
+    <Class name="CardSet" package="ch.cardset.restservice.entity" visibility="public" xPosition="1226.0" yPosition="447.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="name" type="String" visibility="private"/>
@@ -271,7 +271,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Category" package="ch.cardset.restservice.entity" visibility="public" xPosition="661.0" yPosition="252.0">
+    <Class name="Category" package="ch.cardset.restservice.entity" visibility="public" xPosition="923.0" yPosition="378.0">
       <Fields>
         <Field name="id" type="int" visibility="private"/>
         <Field name="name" type="String" visibility="private"/>
@@ -294,7 +294,7 @@
         </Method>
       </Methods>
     </Class>
-    <Interface name="AnswerRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="162.0" yPosition="44.0">
+    <Interface name="AnswerRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="474.0" yPosition="44.0">
       <Methods/>
     </Interface>
     <Interface name="CardRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="1853.0" yPosition="44.0">
@@ -352,14 +352,14 @@
         </Method>
       </Methods>
     </Interface>
-    <Interface name="CardTypeRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="1076.0" yPosition="44.0">
+    <Interface name="CardTypeRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="976.0" yPosition="44.0">
       <Methods>
         <Method name="findByType" returnType="CardType" visibility="public">
           <Argument type="String" name="type"/>
         </Method>
       </Methods>
     </Interface>
-    <Interface name="CategoryRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="502.0" yPosition="44.0">
+    <Interface name="CategoryRepository" package="ch.cardset.restservice.repository" visibility="public" xPosition="671.0" yPosition="44.0">
       <Methods>
         <Method name="findByName" returnType="Category" visibility="public">
           <Argument type="String" name="name"/>
@@ -368,28 +368,19 @@
     </Interface>
   </ClassDiagramComponents>
   <ClassDiagramRelations>
-    <UseRelation source="ch.cardset.restservice.repository.CardSetRepository" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.repository.CardRepository" target="ch.cardset.restservice.entity.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="answer" source="ch.cardset.restservice.dto.CardAnswerDto" target="ch.cardset.restservice.entity.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
-    <UseRelation source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.dto.CardAnswerDto" target="ch.cardset.restservice.entity.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="answer" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
-    <UseRelation source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.repository.CardTypeRepository" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.entity.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="cardSet" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.CardSet" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSet"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardSetRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSetRepository"/>
+    <HasRelation name="cardRepository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <UseRelation source="ch.cardset.restservice.controller.CategoryController" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="repository" source="ch.cardset.restservice.controller.CategoryController" target="ch.cardset.restservice.repository.CategoryRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.controller.CardTypeController" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.repository.CategoryRepository" target="ch.cardset.restservice.entity.Category" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="cardType" source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.CardType" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
     <HasRelation name="category" source="ch.cardset.restservice.entity.CardSet" target="ch.cardset.restservice.entity.Category" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="cardSet" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.CardSet" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSet"/>
-    <HasRelation name="repository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardSetRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="CardSetRepository"/>
-    <UseRelation source="ch.cardset.restservice.controller.CardController" target="ch.cardset.restservice.entity.Card" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <HasRelation name="cardRepository" source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.repository.CardRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
-    <UseRelation source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="answer" source="ch.cardset.restservice.entity.Card" target="ch.cardset.restservice.entity.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
     <HasRelation name="repository" source="ch.cardset.restservice.controller.CardTypeController" target="ch.cardset.restservice.repository.CardTypeRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardSetController" target="ch.cardset.restservice.entity.CardSet" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="ch.cardset.restservice.controller.CardTypeController" target="ch.cardset.restservice.entity.CardType" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="repository" source="ch.cardset.restservice.controller.CategoryController" target="ch.cardset.restservice.repository.CategoryRepository" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
   </ClassDiagramRelations>
 </ClassDiagram>
